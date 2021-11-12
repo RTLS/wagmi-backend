@@ -13,11 +13,10 @@ config :logger, :console,
   level: :debug,
   format: "$date $time [$level] $message\n"
 
-config :wagmi_pg, Repo,
-  database: "ecto_simple",
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost"
+config :wagmi_pg, WagmiPG.Repo,
+  migration_timestamps: [type: :utc_datetime]
+
+config :wagmi_pg, ecto_repos: [WagmiPG.Repo]
 
 # Configures the endpoint
 config :wagmi_server, WagmiServer.Endpoint,
