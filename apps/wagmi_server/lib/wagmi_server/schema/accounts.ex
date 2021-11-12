@@ -1,4 +1,4 @@
-defmodule WagmiServer.Schema.User do
+defmodule WagmiServer.Schema.Accounts do
   use Absinthe.Schema.Notation
 
   object :user do
