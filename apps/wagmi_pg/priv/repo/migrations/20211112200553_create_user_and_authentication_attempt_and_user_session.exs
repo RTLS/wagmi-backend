@@ -16,6 +16,8 @@ defmodule WagmiPG.Repo.Migrations.CreateUserAndAuthenticationAttemptAndUserSessi
       add :security_code, :text, null: false
       add :attempts, :smallint, null: false, default: 0
       add :expires_at, :utc_datetime, null: false
+
+      timestamps()
     end
 
     create unique_index(:authentication_attempt, :phone_number)

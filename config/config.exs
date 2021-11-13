@@ -18,6 +18,10 @@ config :wagmi_pg, WagmiPG.Repo,
 
 config :wagmi_pg, ecto_repos: [WagmiPG.Repo]
 
+config :ecto_shorts,
+  repo: WagmiPG.Repo,
+  error_module: EctoShorts.Actions.Error
+
 # Configures the endpoint
 config :wagmi_server, WagmiServer.Endpoint,
   url: [host: "localhost"],
