@@ -38,7 +38,6 @@ defmodule WagmiServer.MixProject do
   defp deps do
     [
       {:wagmi_pg, in_umbrella: true},
-
       {:phoenix, "~> 1.6.2"},
       {:swoosh, "~> 1.3"},
       {:telemetry_metrics, "~> 0.6"},

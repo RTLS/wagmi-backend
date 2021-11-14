@@ -6,6 +6,8 @@ defmodule WagmiServer.Plugs.Auth do
   alias WagmiPG.Auth
   alias WagmiPG.Auth.{User, UserSession}
 
+  @max_session_age :timer.hours(24) * 90
+
   def init(opts), do: opts
 
   def call(conn, _) do
@@ -18,7 +20,7 @@ defmodule WagmiServer.Plugs.Auth do
   """
   def build_context(conn) do
     with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
-    {:ok, current_user} <- authorize(token) do
+         {:ok, current_user} <- authorize(token) do
       %{current_user: current_user}
     else
       _ -> %{}
@@ -27,9 +29,13 @@ defmodule WagmiServer.Plugs.Auth do
 
   defp authorize(token) do
     with {:ok, hashed_token} <- Auth.UserSession.decode_and_hash_token(token),
-         {:ok, %UserSession{user: %User{} = user}} <- Auth.find_user_session(%{hashed_token: hashed_token, preload: :user}) do
+         {:ok, %UserSession{user: %User{} = user}} <-
+           Auth.find_user_session(%{
+             hashed_token: hashed_token,
+             inserted_at: %{gt: DateTime.add(DateTime.utc_now(), -@max_session_age, :millisecond)},
+             preload: :user
+           }) do
       {:ok, user}
     end
   end
 end
-

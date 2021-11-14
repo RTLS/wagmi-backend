@@ -3,18 +3,18 @@ defmodule WagmiServer.Schema do
 
   alias WagmiServer.Schema.{Types, Mutations}
 
-  import_types Types.Auth
-  import_types Mutations.Auth
+  import_types(Types.Auth)
+  import_types(Mutations.Auth)
 
   query do
     @desc "Gets the current user from the session."
     field :me, :user do
-      resolve &Resolvers.Auth.me/2
+      resolve(&Resolvers.Auth.me/2)
     end
   end
 
   mutation do
-    import_fields :auth_mutations
+    import_fields(:auth_mutations)
   end
 
   alias WagmiServer.Resolvers

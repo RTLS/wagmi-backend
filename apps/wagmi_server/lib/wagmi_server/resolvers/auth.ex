@@ -30,7 +30,11 @@ defmodule WagmiServer.Resolvers.Auth do
   def send_security_code(%{phone_number: phone_number}, _resolution) do
     with {:ok, phone_number} <- Helpers.PhoneNumber.validate(phone_number),
          security_code <- Auth.AuthenticationAttempt.generate_security_code(),
-         {:ok, _} <- Auth.delete_existing_and_create_authentication_attempt(%{phone_number: phone_number, security_code: security_code}),
+         {:ok, _} <-
+           Auth.delete_existing_and_create_authentication_attempt(%{
+             phone_number: phone_number,
+             security_code: security_code
+           }),
          {:ok, %ExTwilio.Message{}} <- send_text_message(phone_number, security_code) do
       {:ok, "Security code sent."}
     else
@@ -45,7 +49,8 @@ defmodule WagmiServer.Resolvers.Auth do
         _resolution
       ) do
     with {:ok, phone_number} <- Helpers.PhoneNumber.validate(phone_number),
-         {:ok, auth_attempt} <- Auth.find_and_increment_authentication_attempt(%{phone_number: phone_number}),
+         {:ok, auth_attempt} <-
+           Auth.find_and_increment_authentication_attempt(%{phone_number: phone_number}),
          :ok <- validate_security_code(auth_attempt, security_code),
          {:ok, _} <- Auth.delete_authentication_attempt(auth_attempt),
          {:ok, user} <- Auth.find_or_create_user(%{phone_number: phone_number}),
@@ -59,7 +64,12 @@ defmodule WagmiServer.Resolvers.Auth do
     end
   end
 
-  defp validate_security_code(%Auth.AuthenticationAttempt{security_code: security_code}, security_code), do: :ok
+  defp validate_security_code(
+         %Auth.AuthenticationAttempt{security_code: security_code},
+         security_code
+       ),
+       do: :ok
+
   defp validate_security_code(_, _), do: {:error, "Invalid security_code."}
 
   defp send_text_message(to_phone_number, security_code) do
