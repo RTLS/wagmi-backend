@@ -11,6 +11,7 @@ defmodule WagmiPG.MixProject do
       lockfile: "../../mix.lock",
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
+      aliases: aliases(),
       deps: deps()
     ]
   end
@@ -30,6 +31,12 @@ defmodule WagmiPG.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:ex_phone_number, "~> 0.2"},
       {:ecto_shorts, github: "MikaAK/ecto_shorts"}
+    ]
+  end
+
+  defp aliases do
+    [
+      "ecto.reset": ["ecto.drop", "ecto.create", "ecto.migrate"]
     ]
   end
 end
