@@ -1,6 +1,7 @@
 defmodule WagmiServer.Schema do
   use Absinthe.Schema
 
+  alias WagmiServer.Resolvers
   alias WagmiServer.Schema.{Types, Mutations}
 
   import_types(Types.Auth)
@@ -17,5 +18,9 @@ defmodule WagmiServer.Schema do
     import_fields(:auth_mutations)
   end
 
-  alias WagmiServer.Resolvers
+  def middleware(middleware, _field, %{identifier: :mutation}) do
+    middleware ++ [WagmiServer.Middlewares.HandleChangesetErrors]
+  end
+
+  def middleware(middleware, _field, _object), do: middleware
 end

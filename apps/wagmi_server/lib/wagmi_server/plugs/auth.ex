@@ -23,8 +23,7 @@ defmodule WagmiServer.Plugs.Auth do
          {:ok, current_user} <- authorize(token) do
       %{current_user: current_user}
     else
-      res ->
-        %{}
+      _ -> %{}
     end
   end
 
