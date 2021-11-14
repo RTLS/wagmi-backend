@@ -38,4 +38,10 @@ defmodule WagmiPG.Auth.UserSession do
       hashed_token: Base.url_encode64(hashed_token, padding: false)
     }
   end
+
+  def decode_and_hash_token(session_token) do
+    with {:ok, decoded} <- Base.url_decode64(session_token, padding: false) do
+      {:ok, @hash_algorithm |> :crypto.hash(decoded) |> Base.url_encode64(padding: false)}
+    end
+  end
 end

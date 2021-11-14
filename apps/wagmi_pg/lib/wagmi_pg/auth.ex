@@ -20,6 +20,10 @@ defmodule WagmiPG.Auth do
     Actions.create(UserSession, params)
   end
 
+  def find_user_session(params) do
+    Actions.find(UserSession, params)
+  end
+
   def create_authentication_attempt(params) do
     Actions.create(AuthenticationAttempt, params)
   end
