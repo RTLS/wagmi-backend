@@ -1,17 +1,14 @@
 defmodule WagmiServer.Schema do
   use Absinthe.Schema
 
-  alias WagmiServer.Resolvers
-  alias WagmiServer.Schema.{Types, Mutations}
+  alias WagmiServer.Schema.{Types, Queries, Mutations}
 
   import_types(Types.Auth)
+  import_types(Queries.Auth)
   import_types(Mutations.Auth)
 
   query do
-    @desc "Gets the current user from the session."
-    field :me, :user do
-      resolve(&Resolvers.Auth.me/2)
-    end
+    import_fields(:auth_queries)
   end
 
   mutation do
