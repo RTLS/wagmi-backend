@@ -28,6 +28,11 @@ defmodule WagmiPG.Auth do
     Actions.find(UserSession, params)
   end
 
+  def delete_all_user_sessions(params) do
+    query = CommonFilters.convert_params_to_filter(UserSession, params, nil)
+    WagmiPG.Repo.delete_all(query)
+  end
+
   def create_authentication_attempt(params) do
     Actions.create(AuthenticationAttempt, params)
   end

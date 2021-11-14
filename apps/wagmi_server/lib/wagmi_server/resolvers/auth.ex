@@ -16,11 +16,7 @@ defmodule WagmiServer.Resolvers.Auth do
   end
 
   def update_user(args, %{context: %{current_user: user}}) do
-    if args == %{} do
-      {:ok, user}
-    else
-      Auth.update_user(user, args)
-    end
+    Auth.update_user(user, args)
   end
 
   def update_user(_, _) do
@@ -62,6 +58,15 @@ defmodule WagmiServer.Resolvers.Auth do
         Logger.error(error)
         {:error, "Authentication failed."}
     end
+  end
+
+  def logout(_, %{context: %{current_user: user}}) do
+    {_count, nil} = Auth.delete_all_user_sessions(%{user_id: user.id})
+    {:ok, "Successfully logged out."}
+  end
+
+  def logout(_, _) do
+    {:error, "Not authorized."}
   end
 
   defp validate_security_code(

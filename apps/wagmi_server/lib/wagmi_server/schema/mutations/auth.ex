@@ -22,5 +22,9 @@ defmodule WagmiServer.Schema.Mutations.Auth do
 
       resolve(&Resolvers.Auth.verify_security_code/2)
     end
+
+    field :logout, :string do
+      resolve &Resolvers.Auth.logout/2
+    end
   end
 end

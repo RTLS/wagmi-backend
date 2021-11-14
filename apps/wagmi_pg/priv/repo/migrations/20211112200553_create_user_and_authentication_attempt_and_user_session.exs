@@ -21,11 +21,14 @@ defmodule WagmiPG.Repo.Migrations.CreateUserAndAuthenticationAttemptAndUserSessi
 
     create unique_index(:authentication_attempt, :phone_number)
 
-    create table(:user_session, primary_key: false) do
-      add :hashed_token, :text, primary_key: true
+    create table(:user_session) do
+      add :hashed_token, :text
       add :user_id, references(:user, type: :binary_id), null: false
 
       timestamps(updated_at: false)
     end
+
+    create unique_index(:user_session, :hashed_token)
+    create index(:user_session, :user_id)
   end
 end

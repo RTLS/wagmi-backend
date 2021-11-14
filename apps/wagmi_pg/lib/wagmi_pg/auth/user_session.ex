@@ -4,7 +4,6 @@ defmodule WagmiPG.Auth.UserSession do
 
   alias WagmiPG.Auth.{User, UserSession}
 
-  @primary_key false
   schema "user_session" do
     field :hashed_token, :string, redact: true
     field :session_token, :string, virtual: true
