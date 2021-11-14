@@ -3,6 +3,17 @@ defmodule WagmiPG.Helpers.PhoneNumber do
 
   import Ecto.Changeset
 
+  def validate(phone_number) do
+    with {:ok, phone_number} <- ExPhoneNumber.parse(phone_number, nil),
+         true <- ExPhoneNumber.is_possible_number?(phone_number),
+         true <- ExPhoneNumber.is_valid_number?(phone_number) do
+      {:ok, ExPhoneNumber.format(phone_number, :e164)}
+    else
+      {:error, } = error -> error
+      _ -> {:error, "Not a valid phone number."}
+    end
+  end
+
   def validate_changeset(%Ecto.Changeset{} = changeset) do
     changeset
     |> validate_length(:phone_number, max: 25)
@@ -10,16 +21,11 @@ defmodule WagmiPG.Helpers.PhoneNumber do
   end
 
   defp validate_phone_number_format(changeset) do
-    phone_number = get_change(changeset, :phone_number)
+    phone_number = get_change(changeset, :phone_number) || get_field(changeset, :phone_number)
 
-    with {:ok, phone_number} <- ExPhoneNumber.parse(phone_number, nil),
-         true <- ExPhoneNumber.is_possible_number?(phone_number),
-         true <- ExPhoneNumber.is_valid_number?(phone_number) do
-      phone_number = ExPhoneNumber.format(phone_number, :e164)
-      put_change(changeset, :phone_number, phone_number)
-    else
+    case validate(phone_number) do
+      {:ok, phone_number} -> put_change(changeset, :phone_number, phone_number)
       {:error, message} -> add_error(changeset, :phone_number, message)
-      _ -> add_error(changeset, :phone_number, "Not a valid phone number.")
     end
   end
 end
