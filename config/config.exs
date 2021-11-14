@@ -22,6 +22,10 @@ config :ecto_shorts,
   repo: WagmiPG.Repo,
   error_module: EctoShorts.Actions.Error
 
+config :ex_twilio,
+  account_sid: {:system, "TWILIO_ACCOUNT_SID"},
+  auth_token: {:system, "TWILIO_AUTH_TOKEN"}
+
 # Configures the endpoint
 config :wagmi_server, WagmiServer.Endpoint,
   url: [host: "localhost"],

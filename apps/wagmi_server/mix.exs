@@ -46,7 +46,8 @@ defmodule WagmiServer.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:absinthe, "~> 1.6.6"},
-      {:absinthe_plug, "~> 1.5.8"}
+      {:absinthe_plug, "~> 1.5.8"},
+      {:ex_twilio, "~> 0.9.1"}
     ]
   end
 
