@@ -8,11 +8,9 @@ defmodule WagmiServer.Router do
   scope "/api" do
     pipe_through :api
 
-    forward "/graphiql", Absinthe.Plug.GraphiQL,
-      schema: WagmiServer.Schema
+    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: WagmiServer.Schema
 
-    forward "/", Absinthe.Plug,
-      schema: WagmiServer.Schema
+    forward "/", Absinthe.Plug, schema: WagmiServer.Schema
   end
 
   # Enables the Swoosh mailbox preview in development.
