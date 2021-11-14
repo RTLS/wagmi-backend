@@ -9,7 +9,7 @@ defmodule WagmiServer.Schema do
   query do
     @desc "Gets the current user from the session."
     field :me, :user do
-      resolve &Resolvers.Auth.me/3
+      resolve &Resolvers.Auth.me/2
     end
   end
 

@@ -3,8 +3,12 @@ defmodule WagmiServer.Resolvers.Auth do
 
   alias WagmiPG.{Auth, Helpers}
 
-  def me(_parent, _args, _resolution) do
-    {:ok, %{id: "some id"}}
+  def me(_args, %{context: %{current_user: me}} = _resolution) do
+    {:ok, me}
+  end
+
+  def me(_, _) do
+    {:error, "Not authorized."}
   end
 
   def send_security_code(%{phone_number: phone_number}, _resolution) do

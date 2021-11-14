@@ -1,16 +1,21 @@
 defmodule WagmiServer.Router do
   use WagmiServer, :router
 
-  pipeline :api do
+  pipeline :graphql do
     plug :accepts, ["json"]
+    plug WagmiServer.Plugs.Auth
   end
 
-  scope "/api" do
-    pipe_through :api
-
-    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: WagmiServer.Schema
+  scope "/graphql" do
+    pipe_through :graphql
 
     forward "/", Absinthe.Plug, schema: WagmiServer.Schema
+  end
+
+  scope "/graphiql" do
+    pipe_through :graphql
+
+    forward "/", Absinthe.Plug.GraphiQL, schema: WagmiServer.Schema
   end
 
   # Enables the Swoosh mailbox preview in development.
