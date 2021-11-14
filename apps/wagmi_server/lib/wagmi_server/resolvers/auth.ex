@@ -15,6 +15,18 @@ defmodule WagmiServer.Resolvers.Auth do
     {:error, "Not authorized."}
   end
 
+  def update_user(args, %{context: %{current_user: user}}) do
+    if args == %{} do
+      {:ok, user}
+    else
+      Auth.update_user(user, args)
+    end
+  end
+
+  def update_user(_, _) do
+    {:error, "Not authorized."}
+  end
+
   def send_security_code(%{phone_number: phone_number}, _resolution) do
     with {:ok, phone_number} <- Helpers.PhoneNumber.validate(phone_number),
          security_code <- Auth.AuthenticationAttempt.generate_security_code(),

@@ -4,6 +4,12 @@ defmodule WagmiServer.Schema.Mutations.Auth do
   alias WagmiServer.Resolvers
 
   object :auth_mutations do
+    field :update_user, :user do
+      arg :username, :string
+
+      resolve &Resolvers.Auth.update_user/2
+    end
+
     field :send_security_code, :string do
       arg :phone_number, non_null(:string)
 

@@ -12,6 +12,10 @@ defmodule WagmiPG.Auth do
     Actions.create(User, params)
   end
 
+  def update_user(user, params) do
+    Actions.update(User, user, params)
+  end
+
   def find_or_create_user(params) do
     Actions.find_or_create(User, params)
   end

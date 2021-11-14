@@ -8,12 +8,13 @@ defmodule WagmiPG.Auth.User do
   @primary_key {:id, :binary_id, [autogenerate: true]}
   schema "user" do
     field :phone_number, :string
+    field :username, :string
 
     timestamps()
   end
 
   @required_params [:phone_number]
-  @all_params @required_params
+  @all_params [:username | @required_params]
 
   def create_changeset(params), do: changeset(%User{}, params)
 

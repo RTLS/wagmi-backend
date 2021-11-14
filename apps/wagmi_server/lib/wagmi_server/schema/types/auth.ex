@@ -4,6 +4,7 @@ defmodule WagmiServer.Schema.Types.Auth do
   object :user do
     field(:id, :id)
     field(:phone_number, :string)
+    field(:username, :string)
   end
 
   object :user_session do
