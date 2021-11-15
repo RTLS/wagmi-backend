@@ -6,9 +6,9 @@ defmodule WagmiPG.Auth.AuthenticationAttempt do
   alias WagmiPG.Helpers
 
   schema "authentication_attempt" do
-    field :phone_number, :string
-    field :security_code, :string
-    field :attempts, :integer
+    field(:phone_number, :string)
+    field(:security_code, :string)
+    field(:attempts, :integer)
 
     timestamps()
   end

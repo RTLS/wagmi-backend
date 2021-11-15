@@ -11,13 +11,12 @@ defmodule WagmiServer.Middlewares.HandleChangesetErrors do
   defp handle_error(%Ecto.Changeset{} = changeset) do
     changeset
     |> Ecto.Changeset.traverse_errors(fn {msg, opts} ->
-        Enum.reduce(opts, msg, fn {key, value}, acc ->
-          String.replace(acc, "%{#{key}}", to_string(value))
-        end)
+      Enum.reduce(opts, msg, fn {key, value}, acc ->
+        String.replace(acc, "%{#{key}}", to_string(value))
+      end)
     end)
-    |> Enum.map(fn({k,v}) -> "#{k}: #{v}" end)
+    |> Enum.map(fn {k, v} -> "#{k}: #{v}" end)
   end
 
   defp handle_error(error), do: [error]
 end
-

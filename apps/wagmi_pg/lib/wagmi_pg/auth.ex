@@ -50,9 +50,11 @@ defmodule WagmiPG.Auth do
 
     WagmiPG.Repo.transaction(fn ->
       with {:ok, %{attempts: attempts} = auth_attempt} <- find_authentication_attempt(params) do
-        {:ok, auth_attempt} = update_authentication_attempt(auth_attempt, %{attempts: attempts + 1})
-         auth_attempt
-       end
+        {:ok, auth_attempt} =
+          update_authentication_attempt(auth_attempt, %{attempts: attempts + 1})
+
+        auth_attempt
+      end
     end)
   end
 

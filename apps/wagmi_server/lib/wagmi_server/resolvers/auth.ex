@@ -12,7 +12,7 @@ defmodule WagmiServer.Resolvers.Auth do
   end
 
   def me(_, _) do
-    {:error, "Not authorized."}
+    {:error, SharedUtils.Error.unauthorized("")}
   end
 
   def update_user(args, %{context: %{current_user: user}}) do
@@ -20,7 +20,7 @@ defmodule WagmiServer.Resolvers.Auth do
   end
 
   def update_user(_, _) do
-    {:error, "Not authorized."}
+    {:error, SharedUtils.Error.unauthorized("")}
   end
 
   def send_security_code(%{phone_number: phone_number}, _resolution) do
@@ -70,7 +70,7 @@ defmodule WagmiServer.Resolvers.Auth do
   end
 
   def logout(_, _) do
-    {:error, "Not authorized."}
+    {:error, SharedUtils.Error.unauthorized("")}
   end
 
   defp validate_security_code(

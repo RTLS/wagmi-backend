@@ -7,8 +7,8 @@ defmodule WagmiPG.Auth.User do
 
   @primary_key {:id, :binary_id, [autogenerate: true]}
   schema "user" do
-    field :phone_number, :string
-    field :username, :string
+    field(:phone_number, :string)
+    field(:username, :string)
 
     timestamps()
   end

@@ -24,7 +24,7 @@ defmodule WagmiServer.Schema.Mutations.Auth do
     end
 
     field :logout, :string do
-      resolve &Resolvers.Auth.logout/2
+      resolve(&Resolvers.Auth.logout/2)
     end
   end
 end

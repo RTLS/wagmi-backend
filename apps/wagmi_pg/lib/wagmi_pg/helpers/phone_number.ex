@@ -9,8 +9,15 @@ defmodule WagmiPG.Helpers.PhoneNumber do
          true <- ExPhoneNumber.is_valid_number?(phone_number) do
       {:ok, ExPhoneNumber.format(phone_number, :e164)}
     else
-      {:error, } = error -> error
-      _ -> {:error, "Not a valid phone number."}
+      {:error, _} = error ->
+        error
+
+      _ ->
+        {:error,
+         SharedUtils.Error.bad_request("Phone number must be in e164 format.", %{
+           phone_number: phone_number,
+           correct_example: "+13234757281"
+         })}
     end
   end
 

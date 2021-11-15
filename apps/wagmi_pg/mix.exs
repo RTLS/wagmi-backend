@@ -27,6 +27,7 @@ defmodule WagmiPG.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:shared_utils, in_umbrella: true},
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
       {:ex_phone_number, "~> 0.2"},

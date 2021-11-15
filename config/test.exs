@@ -8,8 +8,7 @@ config :wagmi_server, WagmiServer.Endpoint,
   server: false
 
 # In test we don't send emails.
-config :wagmi_server, WagmiServer.Mailer,
-  adapter: Swoosh.Adapters.Test
+config :wagmi_server, WagmiServer.Mailer, adapter: Swoosh.Adapters.Test
 
 # Print only warnings and errors during test
 config :logger, level: :warn

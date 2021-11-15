@@ -5,10 +5,10 @@ defmodule WagmiPG.Auth.UserSession do
   alias WagmiPG.Auth.{User, UserSession}
 
   schema "user_session" do
-    field :hashed_token, :string, redact: true
-    field :session_token, :string, virtual: true
+    field(:hashed_token, :string, redact: true)
+    field(:session_token, :string, virtual: true)
 
-    belongs_to :user, User, type: :binary_id
+    belongs_to(:user, User, type: :binary_id)
 
     timestamps(updated_at: false)
   end
