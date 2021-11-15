@@ -37,6 +37,10 @@ defmodule WagmiServer.Resolvers.Auth do
       {:error, error} = res ->
         Logger.error(error)
         res
+
+      {:error, details, _code} ->
+        Logger.error(details)
+        {:error, SharedUtils.Enum.atomize_keys(details)}
     end
   end
 
